@@ -39,7 +39,7 @@ public class Parameters
 	public static int numGenes;
 	public static int geneSize;
 
-	public static int testVal;
+	public static double intronPercent;
 
 /*******************************************************************************
 *                              CONSTRUCTORS                                    *
@@ -71,7 +71,7 @@ public class Parameters
 		numGenes = Integer.parseInt(parmInput.readLine().substring(30).trim());
 		geneSize = Integer.parseInt(parmInput.readLine().substring(30).trim());
 
-		testVal = Integer.parseInt(parmInput.readLine().substring(30).trim());
+		intronPercent = Double.parseDouble(parmInput.readLine().substring(30).trim());
 		parmInput.close();
 
 		if (scaleType==0 || scaleType==2) minORmax = "max";
@@ -112,7 +112,7 @@ public class Parameters
 		output.write("Random Number Seed           :  " + seed + "\n");
 		output.write("Number of Genes/Points       :  " + numGenes + "\n");
 		output.write("Size of Genes                :  " + geneSize + "\n");
-
+		output.write("Intron Percentage 	   : " + intronPercent + "\n");
 		output.write("\n\n");
 
 	}

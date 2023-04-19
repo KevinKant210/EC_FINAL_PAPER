@@ -4,6 +4,7 @@
 *******************************************************************************/
 
 import java.io.*;
+import java.lang.reflect.Parameter;
 import java.util.*;
 import java.text.*;
 
@@ -125,6 +126,7 @@ public class Chromo
 	}
 
 	public static int getRandomWithExclusion(Random rnd, int start, int end, ArrayList<Integer> exclude) {
+		exclude.sort(Comparator.naturalOrder());
 		int random = start + rnd.nextInt(end - start + 1 - exclude.size());
 		for (int ex : exclude) {
 			if (random < ex) {
@@ -137,49 +139,73 @@ public class Chromo
 
 	public Chromo(){
 		//  Set gene values to a randum sequence of 1's and 0's
-		char geneBit;
+		// char geneBit;
 		chromo = "";
 		ArrayList<Integer> used = new ArrayList<>();
+
+		//need to generate chromosome more generall to be used with multiple problems
+		// Have Gene size be the variable depending on the number of digits to represent each city
+		//let num genes represent the number of cities. 
+			//Inserting Introns
+				//We can at average segments inject introns to get our wanted amount? --> prob best approach
+
+		//Im sure to use get randome with exclsions the exclusion array must be sorted!!
+				
 		for (int i=0; i<Parameters.numGenes; i++){
-			for (int j=0; j<Parameters.geneSize; j++){
-				// randnum = Search.r.nextDouble();
-				// if (randnum > 0.5) geneBit = '0';
-				// else geneBit = '1';
-				// this.chromo = chromo + geneBit;
-				boolean exit = false;
+			// for (int j=0; j<Parameters.geneSize; j++){
+				
+				
 
 				
-				int randnumber = getRandomWithExclusion(Search.r, 0, 47, used);
+			// 	int randnumber = getRandomWithExclusion(Search.r, 0, 47, used);
 
-				// int a = 65;
-				// int b = a + 6;
-				// if(randnumber > 25){
+			// 	// int a = 65;
+			// 	// int b = a + 6;
+			// 	// if(randnumber > 25){
 					
-				// 	chromo += (char) (b+randnumber);
-				// }else{
-				// 	chromo += (char) (a+randnumber);
-				// }
-				String add = "";
-				if(randnumber < 10){
-					add += ('0' + Integer.toString(randnumber));
-				}else{
-					add += Integer.toString(randnumber);
-				}
+			// 	// 	chromo += (char) (b+randnumber);
+			// 	// }else{
+			// 	// 	chromo += (char) (a+randnumber);
+			// 	// }
+			// 	String add = "";
+			// 	if(randnumber < 10){
+			// 		add += ('0' + Integer.toString(randnumber));
+			// 	}else{
+			// 		add += Integer.toString(randnumber);
+			// 	}
 
-				// for(int val : used){
-				// 	int comp = Integer.parseInt(add);
+			// 	// for(int val : used){
+			// 	// 	int comp = Integer.parseInt(add);
 
-				// 	if(val == comp){
-				// 		System.out.println("Copy!");
-				// 	}
-				// }
+			// 	// 	if(val == comp){
+			// 	// 		System.out.println("Copy!");
+			// 	// 	}
+			// 	// }
 
-				used.add(randnumber);
-				used.sort(Comparator.naturalOrder());
+			// 	used.add(randnumber);
+			// 	used.sort(Comparator.naturalOrder());
 
 				
-				chromo += add;
+			// 	chromo += add;
+			// }
+			
+			//Generate a random number within the range of our cities
+			int randnumber = getRandomWithExclusion(Search.r, 0, Parameters.numGenes-1, used);
+			//add this to the list of used numbers
+			used.add(randnumber);
+			//sort since thats an assumption we make in our getRandomWithExclusionFunction
+			
+			
+			//from here we take this string
+			String geneBit = Integer.toString(randnumber);
+			
+			for(int j =0 ; j < Parameters.geneSize-geneBit.length(); j++){
+				//pad gene bit with zeroes as needed;
+				geneBit = '0' + geneBit;
 			}
+
+
+			this.chromo += geneBit;
 		}
 		// System.out.println("Start");
 		// System.out.println(chromo);

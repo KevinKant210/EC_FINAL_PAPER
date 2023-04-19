@@ -22,9 +22,10 @@ public class TravelingSalesman extends FitnessFunction {
             
         // }
         ArrayList<Integer> values = new ArrayList<>();
-        for(int i =0 ; i < X.chromo.length(); i += 2){
-            values.add(Integer.parseInt(X.chromo.substring(i,i+2)));
-           
+
+        for(int i =0 ; i < X.chromo.length(); i += Parameters.geneSize){
+            values.add(Integer.parseInt(X.chromo.substring(i,i+Parameters.geneSize)));
+            
         }
 
         for(int i =0 ; i < values.size(); i++){
@@ -32,8 +33,9 @@ public class TravelingSalesman extends FitnessFunction {
 
             
             Location a = Search.intlocations.get(values.get(i));
-            Location b = Search.intlocations.get(values.get(next));
 
+            Location b = Search.intlocations.get(values.get(next));
+           
             distance += Location.distance(a, b);
         }
 
