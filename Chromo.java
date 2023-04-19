@@ -150,8 +150,14 @@ public class Chromo
 				//We can at average segments inject introns to get our wanted amount? --> prob best approach
 
 		//Im sure to use get randome with exclsions the exclusion array must be sorted!!
-				
-		for (int i=0; i<Parameters.numGenes; i++){
+		
+		Integer n = Parameters.numGenes;
+		if(Parameters.intronPercent != 0){														
+			Double multiplier = Parameters.numGenes * Parameters.intronPercent;
+
+			n = (int) (Parameters.numGenes * multiplier);
+		}
+		for (int i=0; i<n; i++){
 			// for (int j=0; j<Parameters.geneSize; j++){
 				
 				
@@ -190,7 +196,7 @@ public class Chromo
 			// }
 			
 			//Generate a random number within the range of our cities
-			int randnumber = getRandomWithExclusion(Search.r, 0, Parameters.numGenes-1, used);
+			int randnumber = getRandomWithExclusion(Search.r, 0, n-1, used);
 			//add this to the list of used numbers
 			used.add(randnumber);
 			//sort since thats an assumption we make in our getRandomWithExclusionFunction

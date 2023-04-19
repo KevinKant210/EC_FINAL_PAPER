@@ -40,7 +40,7 @@ public class Parameters
 	public static int geneSize;
 
 	public static double intronPercent;
-
+	
 /*******************************************************************************
 *                              CONSTRUCTORS                                    *
 *******************************************************************************/

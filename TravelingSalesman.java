@@ -29,14 +29,20 @@ public class TravelingSalesman extends FitnessFunction {
         }
 
         for(int i =0 ; i < values.size(); i++){
-            int next = (i+1)%values.size();
+
+            if(values.get(i) > Parameters.numGenes-1){
+                continue;
+            }else{
+              int next = (i+1)%values.size();
 
             
-            Location a = Search.intlocations.get(values.get(i));
+                Location a = Search.intlocations.get(values.get(i));
 
-            Location b = Search.intlocations.get(values.get(next));
-           
-            distance += Location.distance(a, b);
+                Location b = Search.intlocations.get(values.get(next));
+            
+                distance += Location.distance(a, b);  
+            }
+            
         }
 
         //need to add the distance between the final node and the first one 
