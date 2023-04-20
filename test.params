@@ -3,17 +3,17 @@ Problem Type                 :TS
 Data Input File Name         :NA
 Number of Runs               :50
 Generations per Run          :100
-Population Size              :50
+Population Size              :200
 Selection Method (1)         :2
 Fitness Scaling Type (2)     :1
-Crossover Type (3)           :4
+Crossover Type (3)           :5
 Crossover Rate (4)           :0.8
 Mutation Type (5)            :2
-Mutation Rate (6)            :0.1
+Mutation Rate (6)            :0.005
 Random Number Seed           :75982
-Number of Genes/Points (7)   :48
-Size of Genes (18)           :2
-Intron Percent               :0
+Number of Genes/Points (7)   :0
+Size of Genes (18)           :1
+Intron Percent               :0.5
 
 Notes:
 
@@ -30,6 +30,7 @@ Notes:
 							2 = Two Point Crossover
 							3 = Uniform Crossover
 							4 = edge recombination;
+							5 = Order One
 
 4)  Crossover Rates from 0 to 1, Use "0" to turn off crossover
 

@@ -91,25 +91,34 @@ public class Search {
 		// parmValues.outputParameters(summaryOutput);
 
 		try{
-			File file = new File("opt.txt");
+			File file = new File("gr96.txt");
 
 			Scanner input = new Scanner(file);
 
 			int counter = 0;
-
+			
 			while(input.hasNextLine()){
 				String line = input.nextLine();
-
+				
+				if(line == "EOF" || line.isEmpty()){
+					break;
+				}
 				String[] parts = line.split(" ");
 
-				if(parts[0].length() == 1){
-					parts[0] = '0' + parts[0];
-				}
+				// if(parts[0].length() == 1){
+				// 	parts[0] = '0' + parts[0];
+				// }
 
-				Location loc = new Location(Double.parseDouble(parts[1]),Double.parseDouble(parts[2]),parts[0]);
+				System.out.println(parts[1]);
+				
+				Location loc = new Location(Double.parseDouble(parts[2]),Double.parseDouble(parts[3]),Integer.toString(counter));
+
+
 				locations.put(loc.id, loc);
 
 				intlocations.put(Integer.parseInt(loc.id),loc);
+				
+				
 				// int a = 65;
 				// int b = a + 6;
 
@@ -123,12 +132,15 @@ public class Search {
 				// }
 
 				
-				// counter++;
+				counter++;
 
 				
 			}
 
 			input.close();
+			
+			
+			Parameters.numGenes = counter;
 		}catch(FileNotFoundException e){
 			e.printStackTrace();
 			
@@ -160,7 +172,7 @@ public class Search {
 	//	an else_if block below to instantiate the problem.
  
 		if (Parameters.problemType.equals("NM")){
-				problem = new NumberMatch();
+				
 		}
 		else if (Parameters.problemType.equals("TS")){
 				problem = new TravelingSalesman();
@@ -454,7 +466,7 @@ public class Search {
 		//	Output Fitness Statistics matrix
 		// summaryOutput.write("Gen                 AvgFit              BestFit \n");
 
-		System.out.println("\nBest: " + bestOverAllChromo.rawFitness + " " + bestOverAllChromo.chromo);
+		System.out.println("\nBest: " + bestOverAllChromo.rawFitness + " " + bestOverAllChromo.getChromo(bestOverAllChromo.chromo));
 
 		for (int i=0; i<Parameters.generations; i++){
 			// Hwrite.left(i, 15, summaryOutput);
