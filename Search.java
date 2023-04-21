@@ -115,7 +115,7 @@ public class Search {
 				// }
 
 				
-				
+				System.out.println(parts[2]);
 				Location loc = new Location(Double.parseDouble(parts[2]),Double.parseDouble(parts[3]),Integer.toString(counter));
 
 
