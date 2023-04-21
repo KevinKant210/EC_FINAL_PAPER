@@ -88,6 +88,8 @@ public class Search {
 
 		
 		FileWriter summaryGenStats = new FileWriter(Parameters.expID + "_genstats.csv");
+		FileWriter totalStats = new FileWriter(Parameters.expID+ "_rawdata.csv");
+		
 		// parmValues.outputParameters(summaryOutput);
 
 		try{
@@ -112,7 +114,7 @@ public class Search {
 				// 	parts[0] = '0' + parts[0];
 				// }
 
-				System.out.println(parts[1]);
+				
 				
 				Location loc = new Location(Double.parseDouble(parts[2]),Double.parseDouble(parts[3]),Integer.toString(counter));
 
@@ -144,6 +146,8 @@ public class Search {
 			
 			
 			Parameters.numGenes = counter;
+
+
 		}catch(FileNotFoundException e){
 			e.printStackTrace();
 			
@@ -206,12 +210,12 @@ public class Search {
 		bestOverAllChromo.rawFitness = defaultBest;
 
 		int runChromo = Search.r.nextInt(1,Parameters.numRuns+1);
-		ArrayList<String> evolution = new ArrayList<>();
-
+		ArrayList<Chromo> evolution = new ArrayList<>();
+		ArrayList<Chromo> bestEvolution = new ArrayList<>();
 		//  Start program for multiple runs
 		for (R = 1; R <= Parameters.numRuns; R++){
 
-
+			
 			bestOfRunChromo.rawFitness = defaultBest;
 			// System.out.println();
 
@@ -277,16 +281,34 @@ public class Search {
 							Chromo.copyB2A(bestOverAllChromo, member[i]);
 							bestOverAllR = R;
 							bestOverAllG = G;
+							
 						}
 					}
 
 					
 				}
 				
-				// System.out.println("Chromo: " + Chromo.getChromo(bestOfGenChromo.chromo));
-				if(R == runChromo){
-					evolution.add(Chromo.getChromo(bestOfGenChromo.chromo));
+				//writer here
+				
+				
+				totalStats.write(Chromo.getChromo(bestOfGenChromo.chromo)+ "," + bestOfGenChromo.rawFitness+ "\n");
+				
+				if(bestOverAllR == R){
+					FileWriter locStats = new FileWriter(Parameters.expID+ "_locdata.csv");
+					locStats.write(Chromo.getChromo(bestOverAllChromo.chromo) + "," + bestOverAllChromo.rawFitness + "," +bestOverAllR + "," + bestOverAllG +"\n");
+					for(int i = 0 ; i < bestOverAllChromo.chromo.size(); i++){
+
+						if(bestOverAllChromo.chromo.get(i) < Parameters.numGenes){
+							Location loc = intlocations.get(bestOverAllChromo.chromo.get(i));
+
+							locStats.write(Math.toDegrees(loc.latitude) + "," + Math.toDegrees(loc.longitude)+ "\n");
+						}
+						
+					}
+					
+					locStats.close();
 				}
+				
 				// Accumulate fitness statistics
 				gensFitnessStats[0][G] += sumRawFitness / Parameters.popSize;
 				gensFitnessStats[1][G] += bestOfGenChromo.rawFitness;
@@ -462,6 +484,7 @@ public class Search {
 			// csv.write((int)bestOfRunF);
 			// csv.newLine();
 
+
 			runsFitnessStats[0][bestOfRunR] = bestOfRunG;
 			runsFitnessStats[1][bestOfRunR] = (double)bestOfRunChromo.rawFitness;
 
@@ -469,6 +492,9 @@ public class Search {
 
 			// System.out.println(R + "\t" + "B" + "\t"+ (int)bestOfRunChromo.rawFitness);
 			
+		
+			
+			totalStats.write("\n");
 		} //End of a Run
 
 		// Hwrite.left("B", 8, summaryOutput);
@@ -478,11 +504,20 @@ public class Search {
 		//	Output Fitness Statistics matrix
 		// summaryOutput.write("Gen                 AvgFit              BestFit \n");
 
-		System.out.println("\nBest: " + bestOverAllChromo.rawFitness + " " + bestOverAllChromo.getChromo(bestOverAllChromo.chromo));
+		// System.out.println("\nBest: " + bestOverAllChromo.rawFitness + " " + Chromo.getChromo(bestOverAllChromo.chromo) + " " +bestOverAllR + " " + bestOverAllG);
+		
+		// 	Location loc = intlocations.get(bestOverAllChromo.chromo.get(i));
 
-		for(int i =0 ; i < evolution.size(); i++){
-			System.out.println(evolution.get(i));
+		for(int i = 0 ; i< bestEvolution.size(); i++){
+			System.out.println(Chromo.getChromo(bestEvolution.get(i).chromo));
 		}
+		System.out.println("\n Best Run: " + bestOverAllR + "\n Best Gen: " + bestOverAllG+ "\n Best Fit: " + bestOverAllChromo.rawFitness);
+
+		// 	System.out.println(Math.toDegrees(loc.latitude) + "," + Math.toDegrees(loc.longitude)+",");
+		// }
+		// for(int i =0 ; i < bestEvolution.size(); i++){
+		// 	System.out.println(Chromo.getChromo(bestEvolution.get(i).chromo));
+		// }
 
 		for (int i=0; i<Parameters.generations; i++){
 			// Hwrite.left(i, 15, summaryOutput);
@@ -559,7 +594,7 @@ public class Search {
 		// summaryOutput.close();
 
 		summaryGenStats.close();
-
+		totalStats.close();
 		// System.out.println();
 		// System.out.println("Start:  " + startTime);
 		dateAndTime = Calendar.getInstance(); 

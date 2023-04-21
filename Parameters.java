@@ -39,7 +39,7 @@ public class Parameters
 	public static int numGenes;
 	public static int geneSize;
 
-	public static double intronPercent;
+	public static double intronPercent = 0;
 	
 /*******************************************************************************
 *                              CONSTRUCTORS                                    *
@@ -68,9 +68,9 @@ public class Parameters
 		mutationRate = Double.parseDouble(parmInput.readLine().substring(30).trim());
 
 		seed = Long.parseLong(parmInput.readLine().substring(30).trim());
-		// numGenes = Integer.parseInt(parmInput.readLine().substring(30).trim());
+		numGenes = Integer.parseInt(parmInput.readLine().substring(30).trim());
 		geneSize = Integer.parseInt(parmInput.readLine().substring(30).trim());
-
+		
 		intronPercent = Double.parseDouble(parmInput.readLine().substring(30).trim());
 		parmInput.close();
 

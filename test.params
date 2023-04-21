@@ -1,8 +1,8 @@
 Experiment ID                :burma14.tsp_1
 Problem Type                 :TS
 Data Input File Name         :NA
-Number of Runs               :100
-Generations per Run          :5
+Number of Runs               :10
+Generations per Run          :50
 Population Size              :200
 Selection Method (1)         :2
 Fitness Scaling Type (2)     :1

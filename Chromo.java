@@ -71,12 +71,13 @@ public class Chromo
 		 this.n = Parameters.numGenes;
 		if(Parameters.intronPercent != 0){														
 			
-
+			
 			this.n += (int) (Parameters.numGenes * Parameters.intronPercent);
 
 			
 		}
 
+		
 		for (int i=0; i<this.n; i++){
 			// for (int j=0; j<Parameters.geneSize; j++){
 				
