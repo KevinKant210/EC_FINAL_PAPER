@@ -91,7 +91,10 @@ public class Search {
 		// parmValues.outputParameters(summaryOutput);
 
 		try{
-			File file = new File("gr96.txt");
+			String prob_id = Parameters.expID.split("_")[0];
+			prob_id = "./tsp/"+prob_id+".txt";
+			
+			File file = new File(prob_id);
 
 			Scanner input = new Scanner(file);
 
@@ -202,10 +205,12 @@ public class Search {
 
 		bestOverAllChromo.rawFitness = defaultBest;
 
-		
+		int runChromo = Search.r.nextInt(1,Parameters.numRuns+1);
+		ArrayList<String> evolution = new ArrayList<>();
 
 		//  Start program for multiple runs
 		for (R = 1; R <= Parameters.numRuns; R++){
+
 
 			bestOfRunChromo.rawFitness = defaultBest;
 			// System.out.println();
@@ -274,8 +279,14 @@ public class Search {
 							bestOverAllG = G;
 						}
 					}
-				}
 
+					
+				}
+				
+				// System.out.println("Chromo: " + Chromo.getChromo(bestOfGenChromo.chromo));
+				if(R == runChromo){
+					evolution.add(Chromo.getChromo(bestOfGenChromo.chromo));
+				}
 				// Accumulate fitness statistics
 				gensFitnessStats[0][G] += sumRawFitness / Parameters.popSize;
 				gensFitnessStats[1][G] += bestOfGenChromo.rawFitness;
@@ -438,6 +449,7 @@ public class Search {
 					Chromo.copyB2A(member[i], child[i]);
 				}
 
+				
 			} //  Repeat the above loop for each generation
 
 			// Hwrite.left(bestOfRunR, 4, summaryOutput);
@@ -456,7 +468,7 @@ public class Search {
 			// problem.doPrintGenes(bestOfRunChromo, summaryOutput);
 
 			// System.out.println(R + "\t" + "B" + "\t"+ (int)bestOfRunChromo.rawFitness);
-
+			
 		} //End of a Run
 
 		// Hwrite.left("B", 8, summaryOutput);
@@ -468,12 +480,16 @@ public class Search {
 
 		System.out.println("\nBest: " + bestOverAllChromo.rawFitness + " " + bestOverAllChromo.getChromo(bestOverAllChromo.chromo));
 
+		for(int i =0 ; i < evolution.size(); i++){
+			System.out.println(evolution.get(i));
+		}
+
 		for (int i=0; i<Parameters.generations; i++){
 			// Hwrite.left(i, 15, summaryOutput);
 			// Hwrite.left(gensFitnessStats[0][i]/Parameters.numRuns, 20, 2, summaryOutput);
 			// Hwrite.left(gensFitnessStats[1][i]/Parameters.numRuns, 20, 2, summaryOutput);
 			// summaryOutput.write("\n");
-
+			
 			// generation
 			summaryGenStats.write(i + ",");
 
