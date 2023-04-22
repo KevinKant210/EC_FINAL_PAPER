@@ -95,7 +95,7 @@ public class Search {
 		try{
 			String prob_id = Parameters.expID.split("_")[0];
 			prob_id = "./tsp/"+prob_id+".txt";
-			
+			prob_id = "opt.txt";
 			File file = new File(prob_id);
 
 			Scanner input = new Scanner(file);
@@ -114,9 +114,10 @@ public class Search {
 				// 	parts[0] = '0' + parts[0];
 				// }
 
+
 				
-				System.out.println(parts[2]);
-				Location loc = new Location(Double.parseDouble(parts[2]),Double.parseDouble(parts[3]),Integer.toString(counter));
+				
+				Location loc = new Location(Double.parseDouble(parts[1]),Double.parseDouble(parts[2]),Integer.toString(counter));
 
 
 				locations.put(loc.id, loc);
